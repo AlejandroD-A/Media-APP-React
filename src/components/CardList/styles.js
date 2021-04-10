@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import { bps } from 'styles'
 
 export const CardList = styled.ul`
   /*  padding: 1rem;
