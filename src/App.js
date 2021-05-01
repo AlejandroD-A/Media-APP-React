@@ -6,6 +6,7 @@ import RegisterPage from 'pages/RegisterPage'
 import LoginPage from 'pages/LoginPage'
 import Header from 'components/Header'
 import Container from 'layout/Container'
+import ProfilePage from 'pages/ProfilePage'
 
 import UserContextProvider from 'context/UserContext'
 import ShortContextProvider from 'context/ShortContext'
@@ -27,7 +28,7 @@ export default function App() {
                   <Route component={DashboardPage} exact path="/" />
                   <Route component={RegisterPage} exact path="/register" />
                   <Route component={LoginPage} exact path="/login" />
-                  <Route exact path="/user/:id" />
+                  <Route component={ProfilePage} exact path="/user/:id" />
                 </Switch>
               </main>
             </Router>
