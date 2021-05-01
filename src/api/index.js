@@ -1,6 +1,6 @@
 import config from 'api/config'
 
-export function getAuthFetch(URI, jwt) {
+export function getAuthFetch(URI, jwt = '') {
   return fetch(`${config.urlPath}${URI}`, {
     method: 'GET',
     headers: {
@@ -14,7 +14,7 @@ export function getAuthFetch(URI, jwt) {
   })
 }
 
-export function postAuthFetch(URI, formData, jwt) {
+export function postAuthFetch({ URI, formData = '', jwt }) {
   const headers = new Headers({
     Authorization: `Bearer ${jwt}`,
     Accept: 'application/json'
