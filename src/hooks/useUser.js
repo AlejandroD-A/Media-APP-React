@@ -5,7 +5,10 @@ import { register as registerService, login as loginService } from 'api/auth'
 export default function useUser() {
   const [errorServer, setErrorServer] = useState([])
   const [isSubmitted, setIsSubmitted] = useState(false)
-  const { user, setUser, setJwt, jwt } = useContext(Context)
+
+  const { user, setUser, setJwt, jwt, setShortFavs, shortFavs } = useContext(
+    Context
+  )
 
   const register = values => {
     registerService(values)
@@ -32,7 +35,7 @@ export default function useUser() {
       .then(res => {
         setErrorServer([])
 
-        if (res?.errors) {
+        if (res.errors) {
           console.log('err')
           const { errors } = res
           Object.entries(errors).forEach(([key, value]) => {
@@ -67,6 +70,8 @@ export default function useUser() {
     isSubmitted,
     user,
     jwt,
+    shortFavs,
+    setShortFavs,
     isLogged: Boolean(user)
   }
 }
