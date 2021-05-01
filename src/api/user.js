@@ -1,15 +1,12 @@
-import config from './config'
+import { postAuthFetch, getAuthFetch } from './index'
 
-export function getUser() {
-  return fetch(`${config.urlPath}/user`)
-    .then(res => {
-      if (!res.ok) {
-        throw new Error('Error')
-      }
-      return res.json()
-    })
-    .then(resJson => {
-      const { data } = resJson.data
-      return data
-    })
+export function getUser({ id, jwt }) {
+  return getAuthFetch(`/user/${id}`, jwt).then(resJson => {
+    const { user, isFollow } = resJson.data
+    return { user, isFollow }
+  })
+}
+
+export function follow(id, jwt) {
+  return postAuthFetch({ URI: `/user/${id}/follow`, jwt }).then(res => res)
 }
