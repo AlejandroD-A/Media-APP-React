@@ -5,19 +5,32 @@ export const Card = styled.article`
   flex-direction: column;
   font-family: 'Montserrat', monospace;
   color: white;
+  animation-duration: 0.5s;
+  animation-name: blur;
+
+  @keyframes blur {
+    from {
+      filter: blur(1.5rem);
+    }
+
+    to {
+      filter: blur(0);
+    }
+  }
 `
 
 export const CardHeader = styled.div`
+  margin-bottom: -1.5rem;
+
   padding: 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.8rem;
-  z-index: 10;
+  z-index: 2;
 
   span {
     background: rgba(0, 0, 0, 0.7);
-    margin-bottom: -2rem;
   }
 
   a {
@@ -35,7 +48,6 @@ export const CardHeader = styled.div`
 export const CardBody = styled.div`
   border-right: 1px solid rgb(253, 255, 182, 0.6);
   border-bottom: 1px solid rgb(253, 255, 182, 0.6);
-
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   transition: all 4s ease-in infinite;
@@ -56,7 +68,6 @@ export const CardContent = styled.div`
 `
 export const ImgWrapper = styled.div`
   width: 100%;
-
   img {
     width: 100%;
     max-height: 500px;
@@ -80,31 +91,45 @@ export const CardStatusList = styled.div`
     display: flex;
     align-items: center;
   }
-  ul > a {
+  ul > button {
+    background: none;
+    border: 0;
     display: flex;
-    flex-direction: column;
     align-items: center;
     text-decoration: none;
     color: white;
     font-size: 0.8rem;
     margin-left: 0.5rem;
   }
+  button > span {
+    font-family: 'Montserrat', monospace;
+    font-size: 0.6rem;
+    font-weight: 300;
+  }
+
+  button:focus {
+    outline: none;
+  }
+
   .icon {
     font-size: 1.2rem;
     margin-right: 3px;
-    transition: font-size 0.2s, color 2s;
+    transition: font-size 0.2s, color 0.2s;
+  }
+
+  .faved {
+    color: var(--danger-color);
   }
 
   .icon:hover {
-    color: var(--warning-color);
     font-size: 1.5rem;
   }
 `
 export const ContentShort = styled.div`
   font-size: 1rem;
   font-weight: 200;
-  margin-top: 1rem;
-  padding: 2rem;
+  padding: 1rem;
+  margin-top: 0.5rem;
 `
 export const TagList = styled.ul`
   padding: 0;

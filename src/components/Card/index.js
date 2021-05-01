@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { FaRegComments } from 'react-icons/fa'
-import { FaRegHeart } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
+
+import FavShort from 'components/FavShort'
 
 import {
   Card as CardStyled,
@@ -17,19 +18,22 @@ import {
 } from './styles'
 
 function Card({
+  id,
   user,
   title,
   created_at,
   tags,
   cover,
+  images,
   content,
   index,
   commentsCount,
   favouritesCount
 }) {
-  const createDate = () => {
+  const createDate = useCallback(() => {
     return moment(new Date(created_at)).local().fromNow()
-  }
+  }, [created_at])
+
   return (
     <CardStyled index={index}>
       <CardHeader>
@@ -46,6 +50,13 @@ function Card({
           </ImgWrapper>
         )}
 
+        {images &&
+          images.map((img, index) => (
+            <ImgWrapper key={index}>
+              <img src={img.url} alt="img" />
+            </ImgWrapper>
+          ))}
+
         {content && <ContentShort>{content}</ContentShort>}
         {title && <CardTitle>{title}</CardTitle>}
 
@@ -59,14 +70,11 @@ function Card({
               ))}
             </TagList>
             <ul>
-              <a href="comments">
+              <button href="comments">
                 <FaRegComments className="icon" />
-                {commentsCount}
-              </a>
-              <a href="favs">
-                <FaRegHeart className="icon" />
-                {favouritesCount}
-              </a>
+                <span>{commentsCount < 0 ? commentsCount : null}</span>
+              </button>
+              <FavShort id={id} favouritesCount={favouritesCount} />
             </ul>
           </CardStatusList>
         </CardContent>
