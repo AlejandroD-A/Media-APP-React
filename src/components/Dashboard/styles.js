@@ -1,31 +1,40 @@
 import styled from '@emotion/styled'
 
-export const CardSection = styled.div``
-
-export const Menu = styled.nav`
-  font-size: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .selected {
-    font-size: 2rem;
-    border-bottom: solid var(--secondary-color) 2px;
+export const DashboardSection = styled.section`
+  .buttonCreate {
+    background: none;
+    border: none;
+  }
+  .create {
+    color: white;
+    font-size: 4rem;
   }
 `
 
-export const MenuItem = styled.button`
-  border: none;
-  background: none;
+export const SelectorButton = styled.button`
   font-family: 'Montserrat', sans-serif;
   font-weight: 200;
+  border: none;
+  transition: all 0.5s ease-out;
+  ${props => {
+    if (props.selected) {
+      return ` 
+      color: var(--dark-back-main-color);
+      background: white;
+      font-size:2rem;
+      padding: 0 2rem;
+  
+    `
+    } else {
+      return `
+      background:var(--dark-back-main-color);
+      color: white;
+      padding: 0 1rem;  
+      `
+    }
+  }}
 
-  margin-left: 2rem;
-  padding-bottom: 0.1rem;
-
-  color: white;
-  font-size: 1rem;
-  transition: 0.5s all ease-in-out;
-  :hover {
-    border-bottom: solid var(--secondary-color) 2px;
+  :focus {
+    outline: 0;
   }
 `

@@ -1,53 +1,66 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { getShorts, getPerspectiveShorts } from 'api/shorts'
-import { Context } from 'context/ShortContext'
-import useUser from 'hooks/useUser'
+import React, { useState } from 'react'
+import { AiTwotoneEdit } from 'react-icons/ai'
+
 import Card from 'components/Card'
 import CardList from 'components/CardList'
+import CreateShort from 'components/CreateShort'
 import Loader from 'components/Loader'
+import Modal from 'components/Modal'
+import PerspectiveMenu from 'components/PerspectiveMenu'
 
-function ShortList({ perspective }) {
-  const { shorts, setShorts } = useContext(Context)
-  const [isLoading, setLoading] = useState(true)
-  const { jwt } = useUser()
+import useShorts from 'hooks/useShorts'
+import useUser from 'hooks/useUser'
 
-  useEffect(() => {
-    if (perspective === 'perspective') {
-      setLoading(true)
+function ShortList({ perspective, setPerspective }) {
+  const { isLoading, shorts } = useShorts(perspective)
+  const { isLogged } = useUser()
+  const [showCreateModal, setShowCreateModal] = useState(false)
 
-      getPerspectiveShorts(jwt)
-        .then(data => {
-          setLoading(false)
-          setShorts(data)
-        })
-        .catch(err => console.error(err))
-    } else {
-      setLoading(true)
+  const closeModal = () => {
+    setShowCreateModal(false)
+  }
+  return (
+    <>
+      {showCreateModal && (
+        <Modal onClose={closeModal}>
+          <CreateShort onClose={closeModal} />
+        </Modal>
+      )}
 
-      getShorts()
-        .then(data => {
-          setLoading(false)
-          setShorts(data)
-        })
-        .catch(err => console.error(err))
-    }
-  }, [perspective, jwt, setShorts])
+      {isLogged && (
+        <button
+          className="buttonCreate"
+          onClick={() => setShowCreateModal(true)}
+        >
+          <AiTwotoneEdit className="create" />
+        </button>
+      )}
+      
+      <PerspectiveMenu
+        perspective={perspective}
+        setPerspective={setPerspective}
+      />
 
-  return isLoading ? (
-    <Loader />
-  ) : (
-    <CardList>
-      {shorts.map(short => (
-        <Card
-          id={short.id}
-          key={short.id}
-          user={short.user}
-          content={short.content}
-          created_at={short.created_at}
-          tags={short.tags}
-        />
-      ))}
-    </CardList>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <CardList>
+          {shorts.map(short => (
+            <Card
+              id={short.id}
+              key={short.id}
+              user={short.user}
+              content={short.content}
+              created_at={short.created_at}
+              tags={short.tags}
+              images={short.images}
+              commentsCount={short.commentsCount}
+              favouritesCount={short.favouritesCount}
+            />
+          ))}
+        </CardList>
+      )}
+    </>
   )
 }
 

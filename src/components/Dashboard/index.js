@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 import PostList from 'components/PostList'
 import ShortList from 'components/ShortList'
 
-import useUser from 'hooks/useUser'
-
-import { CardSection, Menu, MenuItem } from './styles'
+import { DashboardSection, SelectorButton } from './styles'
 
 const ACTIVITY = {
   POSTS: 'posts',
@@ -12,46 +10,33 @@ const ACTIVITY = {
 }
 
 function Dashboard() {
-  const [activity, setActivity] = useState(ACTIVITY.POSTS)
+  const [activity, setActivity] = useState(ACTIVITY.SHORTS)
   const [perspective, setPerspective] = useState('new')
 
-  const { isLogged } = useUser()
-
   return (
-    <CardSection>
+    <DashboardSection>
       <div>
-        <button onClick={() => setActivity(ACTIVITY.SHORTS)}>SHORTS</button>
-        <button onClick={() => setActivity(ACTIVITY.POSTS)}>POSTS</button>
+        <SelectorButton
+          selected={activity === ACTIVITY.SHORTS}
+          onClick={() => setActivity(ACTIVITY.SHORTS)}
+        >
+          SHORTS
+        </SelectorButton>
+        <SelectorButton
+          selected={activity === ACTIVITY.POSTS}
+          onClick={() => setActivity(ACTIVITY.POSTS)}
+        >
+          POSTS
+        </SelectorButton>
       </div>
-      <Menu>
-        {isLogged && (
-          <MenuItem
-            className={perspective === 'perspective' ? 'selected' : null}
-            onClick={() => setPerspective('perspective')}
-          >
-            PERSPECTIVE!
-          </MenuItem>
-        )}
-        <MenuItem
-          className={perspective === 'new' ? 'selected' : null}
-          onClick={() => setPerspective('new')}
-        >
-          NEW
-        </MenuItem>
-        <MenuItem
-          className={perspective === 'best' ? 'selected' : null}
-          onClick={() => setPerspective('best')}
-        >
-          BEST
-        </MenuItem>
-      </Menu>
 
-      {activity === 'posts' ? (
-        <PostList perspective={perspective} />
-      ) : (
-        <ShortList perspective={perspective} />
+      {activity === 'posts' && (
+        <PostList perspective={perspective} setPerspective={setPerspective} />
       )}
-    </CardSection>
+      {activity === 'shorts' && (
+        <ShortList perspective={perspective} setPerspective={setPerspective} />
+      )}
+    </DashboardSection>
   )
 }
 
