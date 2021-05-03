@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 
 export const Menu = styled.nav`
-  font-size: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,12 +16,12 @@ export const MenuItem = styled.button`
   padding-bottom: 0.1rem;
 
   color: white;
-  font-size: 1rem;
+  font-size: 0.8rem;
   transition: 0.5s all ease-in-out;
   ${props => {
     if (props.selected) {
       return ` 
-    font-size: 2rem;
+    font-size: 1.5rem;
    border-bottom: solid var(--secondary-color) 2px;`
     }
   }}
