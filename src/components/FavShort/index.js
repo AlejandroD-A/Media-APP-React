@@ -10,10 +10,8 @@ function FavShort({ id, favouritesCount }) {
   const isFaved = useCallback(() => {
     if (user) {
       if (shortFavs) {
-        return shortFavs.some(short => short.id === id)
+        return shortFavs.some(short => short.id === id) ? true : false
       }
-    } else {
-      return false
     }
   }, [shortFavs, user, id])
 
