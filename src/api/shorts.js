@@ -1,8 +1,8 @@
 import config from './config'
 import { getAuthFetch, postAuthFetch } from './index'
 
-export function getShorts() {
-  return fetch(`${config.urlPath}/shorts`)
+export function getShorts(page = 1) {
+  return fetch(`${config.urlPath}/shorts?page=${page}`)
     .then(res => {
       if (!res.ok) {
         throw new Error('Error')
@@ -16,8 +16,8 @@ export function getShorts() {
     })
 }
 
-export function getPerspectiveShorts(jwt) {
-  return getAuthFetch(`/shorts/perspective`, jwt).then(resJson => {
+export function getPerspectiveShorts(jwt, page = 1) {
+  return getAuthFetch(`/shorts/perspective?page=${page}`, jwt).then(resJson => {
     const { data } = resJson.data
     return data
   })

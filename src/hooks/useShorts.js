@@ -5,8 +5,10 @@ import useUser from './useUser'
 
 function useShorts(perspective) {
   const { shorts, setShorts } = useContext(Context)
-  const [isLoading, setLoading] = useState(true)
+  const [isLoading, setLoading] = useState(false)
+  const [isLoadingNewPage, setIsLoadingNewPage] = useState(false)
   const { jwt } = useUser()
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     console.log(perspective)
@@ -30,7 +32,30 @@ function useShorts(perspective) {
     }
   }, [perspective, jwt, setShorts])
 
-  return { isLoading, shorts }
+  useEffect(() => {
+    if (page === 1) return
+    if (perspective === 'perspective') {
+      setIsLoadingNewPage(true)
+
+      getPerspectiveShorts(jwt, page)
+        .then(data => {
+          setIsLoadingNewPage(false)
+          setShorts(prev => prev.concat(...data))
+        })
+        .catch(err => console.error(err))
+    } else {
+      setIsLoadingNewPage(true)
+
+      getShorts(page)
+        .then(data => {
+          setIsLoadingNewPage(false)
+          setShorts(prev => prev.concat(...data))
+        })
+        .catch(err => console.error(err))
+    }
+  }, [page, jwt, perspective, setShorts])
+
+  return { isLoading, shorts, setPage, isLoadingNewPage }
 }
 
 export default useShorts

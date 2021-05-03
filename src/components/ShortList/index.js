@@ -12,13 +12,16 @@ import useShorts from 'hooks/useShorts'
 import useUser from 'hooks/useUser'
 
 function ShortList({ perspective, setPerspective }) {
-  const { isLoading, shorts } = useShorts(perspective)
+  const { isLoading, isLoadingNewPage, shorts, setPage } = useShorts(
+    perspective
+  )
   const { isLogged } = useUser()
   const [showCreateModal, setShowCreateModal] = useState(false)
 
   const closeModal = () => {
     setShowCreateModal(false)
   }
+
   return (
     <>
       {showCreateModal && (
@@ -35,30 +38,41 @@ function ShortList({ perspective, setPerspective }) {
           <AiTwotoneEdit className="create" />
         </button>
       )}
-      
+
       <PerspectiveMenu
         perspective={perspective}
         setPerspective={setPerspective}
       />
 
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <CardList>
-          {shorts.map(short => (
-            <Card
-              id={short.id}
-              key={short.id}
-              user={short.user}
-              content={short.content}
-              created_at={short.created_at}
-              tags={short.tags}
-              images={short.images}
-              commentsCount={short.commentsCount}
-              favouritesCount={short.favouritesCount}
-            />
-          ))}
-        </CardList>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <>
+          <CardList>
+            {shorts.map(short => (
+              <Card
+                id={short.id}
+                key={short.id}
+                user={short.user}
+                content={short.content}
+                created_at={short.created_at}
+                tags={short.tags}
+                images={short.images}
+                commentsCount={short.commentsCount}
+                favouritesCount={short.favouritesCount}
+              />
+            ))}
+          </CardList>
+          {isLoadingNewPage && <Loader />}
+          {!isLoadingNewPage && (
+            <button
+              onClick={() => {
+                setPage(prev => prev + 1)
+              }}
+            >
+              Load More
+            </button>
+          )}
+        </>
       )}
     </>
   )
