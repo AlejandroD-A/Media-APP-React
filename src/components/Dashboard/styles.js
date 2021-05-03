@@ -7,7 +7,7 @@ export const DashboardSection = styled.section`
   }
   .create {
     color: white;
-    font-size: 4rem;
+    font-size: 3rem;
   }
 `
 
@@ -21,7 +21,7 @@ export const SelectorButton = styled.button`
       return ` 
       color: var(--dark-back-main-color);
       background: white;
-      font-size:2rem;
+      font-size:1rem;
       padding: 0 2rem;
   
     `

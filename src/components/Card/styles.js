@@ -26,7 +26,7 @@ export const CardHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   z-index: 2;
 
   span {
@@ -51,11 +51,6 @@ export const CardBody = styled.div`
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   transition: all 4s ease-in infinite;
-  cursor: pointer;
-  :hover {
-    border-right: 2px solid rgb(253, 255, 182, 1);
-    border-bottom: 2px solid rgb(253, 255, 182, 1);
-  }
 `
 
 export const CardContent = styled.div`
@@ -63,8 +58,9 @@ export const CardContent = styled.div`
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   padding: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 300;
+  cursor: pointer;
 `
 export const ImgWrapper = styled.div`
   width: 100%;
