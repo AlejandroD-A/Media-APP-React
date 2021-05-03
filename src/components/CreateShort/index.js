@@ -17,6 +17,7 @@ function CreateShort({ onClose }) {
   const { jwt } = useUser()
   const { setShorts } = useContext(Context)
   const [isLoading, setIsLoading] = useState(false)
+  const [errorServer, setErrorServer] = useState([])
 
   const onSubmit = values => {
     setIsLoading(true)
@@ -24,7 +25,16 @@ function CreateShort({ onClose }) {
       .then(data => {
         setIsLoading(false)
         if (data.errors) {
-          return console.error(data.errors)
+          const { errors } = data
+          const arrayErrors = []
+          Object.entries(errors).forEach(([key, value]) => {
+            value.forEach(value => {
+              arrayErrors.push(value)
+            })
+          })
+
+          setErrorServer(arrayErrors)
+          return
         }
         setShorts(prev => [data, ...prev])
         onClose()
@@ -60,7 +70,10 @@ function CreateShort({ onClose }) {
 
       {errors.content ? <div>{errors.content.message}</div> : null}
 
-      <button disabled={isLoading}>{!isLoading ? 'CREATE' : <Loader />}</button>
+      {errorServer &&
+        errorServer.map(error => <p style={{ color: 'white' }}>{error}</p>)}
+
+      {isLoading ? <Loader /> : <button disabled={isLoading}>CREATE</button>}
     </Form>
   )
 }
