@@ -20,7 +20,8 @@ function FavShort({ id, favouritesCount }) {
       addFavShort({ shortId: id, jwt })
         .then(res => {
           if (!isFaved()) {
-            setShortFavs(prevShorts => [...prevShorts, { id: id }])
+            const newShortFavs = [...shortFavs, { id: id }]
+            setShortFavs(newShortFavs)
             setFavCount(prev => prev + 1)
           } else {
             const newShortsFavs = shortFavs.filter(short => short.id !== id)
