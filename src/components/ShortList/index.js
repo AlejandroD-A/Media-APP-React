@@ -7,12 +7,12 @@ import CreateShort from 'components/CreateShort'
 import Loader from 'components/Loader'
 import Modal from 'components/Modal'
 import PerspectiveMenu from 'components/PerspectiveMenu'
-
+import LoadMoreButton from 'components/LoadMoreButton'
 import useShorts from 'hooks/useShorts'
 import useUser from 'hooks/useUser'
 
 function ShortList({ perspective, setPerspective }) {
-  const { isLoading, isLoadingNewPage, shorts, setPage } = useShorts(
+  const { isLoading, shorts, setPage, isLoadingNewPage } = useShorts(
     perspective
   )
   const { isLogged } = useUser()
@@ -62,16 +62,13 @@ function ShortList({ perspective, setPerspective }) {
               />
             ))}
           </CardList>
-          {isLoadingNewPage && <Loader />}
-          {!isLoadingNewPage && (
-            <button
-              onClick={() => {
-                setPage(prev => prev + 1)
-              }}
-            >
-              Load More
-            </button>
-          )}
+
+          {
+            <LoadMoreButton
+              setPage={setPage}
+              isLoadingNewPage={isLoadingNewPage}
+            />
+          }
         </>
       )}
     </>
