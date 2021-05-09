@@ -10,20 +10,20 @@ export default function useUser() {
     Context
   )
 
+  const handleErrors = errors => {
+    let arrayError = []
+    Object.entries(errors).forEach(([key, value]) => {
+      value.forEach(error => arrayError.push(error))
+    })
+    console.log(arrayError)
+    setErrorServer(arrayError)
+  }
+
   const register = values => {
     registerService(values)
       .then(res => {
         setErrorServer([])
-        if (res.errors) {
-          const { errors } = res
-          Object.entries(errors).forEach(([key, value]) => {
-            value.forEach(value => {
-              setErrorServer(prev => [...prev, value])
-            })
-          })
-        } else {
-          setIsSubmitted(true)
-        }
+        res.errors ? handleErrors(res.errors) : setIsSubmitted(true)
       })
       .catch(err => {
         setErrorServer(err.message)
@@ -33,26 +33,15 @@ export default function useUser() {
   const login = values => {
     loginService(values)
       .then(res => {
+        const { data } = res
         setErrorServer([])
+        window.sessionStorage.setItem('jwt', data.access_token)
+        setJwt(data.access_token)
 
-        if (res.errors) {
-          console.log('err')
-          const { errors } = res
-          Object.entries(errors).forEach(([key, value]) => {
-            value.forEach(value => {
-              setErrorServer(prev => [...prev, value])
-            })
-          })
-        } else {
-          setUser(res.user)
-          setJwt(res.access_token)
-          sessionStorage.setItem('jwt', res.access_token)
-          setIsSubmitted(true)
-        }
+        setIsSubmitted(true)
       })
       .catch(err => {
-        console.error(err)
-        setErrorServer(['Wrong Crendentials'])
+        setErrorServer(['Invalid Credentials'])
       })
   }
 

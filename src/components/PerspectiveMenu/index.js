@@ -32,4 +32,4 @@ function PerspectiveMenu({ perspective, setPerspective }) {
   )
 }
 
-export default PerspectiveMenu
+export default React.memo(PerspectiveMenu)

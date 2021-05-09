@@ -2,15 +2,11 @@ import { postFetch } from 'api'
 import config from 'api/config'
 
 export function register(formData) {
-  return postFetch(`/auth/register`, formData).then(res => {
-    return res.data
-  })
+  return postFetch(`/auth/register`, formData)
 }
 
 export function login(formData) {
-  return postFetch(`/auth/login`, formData).then(res => {
-    return res.data
-  })
+  return postFetch(`/auth/login`, formData)
 }
 
 export function user(jwt) {

@@ -1,8 +1,10 @@
 import styled from '@emotion/styled'
 import { theme } from 'styles'
+
 export const Card = styled.article`
   display: flex;
   flex-direction: column;
+  margin: 0.5rem 1rem;
   font-family: 'Montserrat', monospace;
   color: white;
   animation-duration: 0.5s;
@@ -122,9 +124,9 @@ export const CardStatusList = styled.div`
   }
 `
 export const ContentShort = styled.div`
-  font-size: 1rem;
+  font-size: 0.7rem;
   font-weight: 200;
-  padding: 1rem;
+  padding: 1rem 0.5rem;
   margin-top: 0.5rem;
 `
 export const TagList = styled.ul`
