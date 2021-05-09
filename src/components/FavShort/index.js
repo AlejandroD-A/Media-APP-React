@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import useUser from 'hooks/useUser'
 import { addFavShort } from 'api/favs'
 import { FaRegHeart } from 'react-icons/fa'
@@ -6,20 +6,23 @@ import { FaRegHeart } from 'react-icons/fa'
 function FavShort({ id, favouritesCount }) {
   const { jwt, user, isLogged, shortFavs, setShortFavs } = useUser()
   const [favCount, setFavCount] = useState(favouritesCount)
+  const [isFaved, setIsFaved] = useState(false)
 
-  const isFaved = useCallback(() => {
+  useEffect(() => {
     if (user) {
       if (shortFavs) {
-        return shortFavs.some(short => short.id === id) ? true : false
+        return shortFavs.some(short => short.id === id)
+          ? setIsFaved(true)
+          : setIsFaved(false)
       }
     }
-  }, [shortFavs, user, id])
+  }, [id, shortFavs, user])
 
   const handleAddFav = () => {
     if (isLogged) {
       addFavShort({ shortId: id, jwt })
         .then(res => {
-          if (!isFaved()) {
+          if (!isFaved) {
             const newShortFavs = [...shortFavs, { id: id }]
             setShortFavs(newShortFavs)
             setFavCount(prev => prev + 1)
@@ -34,7 +37,7 @@ function FavShort({ id, favouritesCount }) {
   }
   return (
     <button onClick={handleAddFav}>
-      <FaRegHeart className={` icon ${isFaved() ? 'faved' : ''}`} />
+      <FaRegHeart className={` icon ${isFaved ? 'faved' : ''}`} />
       <span>{favCount !== 0 ? favCount : null}</span>
     </button>
   )
