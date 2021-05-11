@@ -4,10 +4,11 @@ import useUser from 'hooks/useUser'
 import PerspectiveMenu from 'components/PerspectiveMenu'
 import Card from 'components/Card'
 import CardList from 'components/CardList'
+import CreatePost from 'components/CreatePost'
 
 function PostList({ perspective, setPerspective }) {
   const [posts, setPosts] = useState([])
-  const { jwt } = useUser()
+  const { jwt, isLogged } = useUser()
 
   useEffect(() => {
     if (perspective === 'perspective') {
@@ -31,6 +32,8 @@ function PostList({ perspective, setPerspective }) {
         perspective={perspective}
         setPerspective={setPerspective}
       />
+
+      {isLogged && <CreatePost />}
 
       <CardList>
         {posts.map(post => (
