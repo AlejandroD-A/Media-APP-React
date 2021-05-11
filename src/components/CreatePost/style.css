@@ -1,0 +1,27 @@
+.wrapper-class {
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+.editor-class {
+  background-color: white;
+  color: black;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  height: 20rem;
+  overflow: scroll;
+}
+.toolbar-class {
+  color: black;
+  border: 1px solid #ccc;
+}
+
+.preview {
+  background: white;
+  background-color: white;
+  color: black;
+  padding: 1rem;
+  border: 1px solid rgb(161, 161, 161);
+  width: 80vw;
+  height: 80vh;
+  overflow: scroll;
+}
